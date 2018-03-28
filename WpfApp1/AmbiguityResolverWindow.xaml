@@ -1,0 +1,79 @@
+﻿<Window x:Class="ClassroomAssignment.AmbiguityResolverWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ClassroomAssignment"
+        xmlns:src="clr-namespace:ClassroomAssignment.Model"
+        mc:Ignorable="d"
+        Title="Resolve Ambiguities" SizeToContent="WidthAndHeight" Margin="0,0,0,2" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="ReadOnlyCell" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+            <Setter Property="IsEnabled" Value="False"/>
+            <Style.Triggers>
+
+            </Style.Triggers>
+
+        </Style>
+    </Window.Resources>
+
+    <StackPanel Orientation="Vertical" Margin="0,0,0,25">
+
+        <Grid Height="269">
+            <DataGrid x:Name="CoursesDataGrid" SelectionChanged="DataGrid_SelectionChanged"  AutoGenerateColumns="False" ItemsSource="{Binding}" CellEditEnding="CourseDataGrid_CellEditEnding" Margin="0,0,0,37">
+                <DataGrid.RowHeaderStyle>
+                    <Style TargetType="{x:Type DataGridRowHeader}">
+                        <Setter Property="Width" Value="25" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding AmbiguousState}" Value="True">
+                                <Setter Property="Background" Value="Red"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding AmbiguousState}" Value="False">
+                                <Setter Property="Background" Value="Green"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowHeaderStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Class ID" Binding="{Binding ClassID}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Course Name" Binding="{Binding CourseName}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Meeting Pattern" Binding="{Binding MeetingPattern}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Room" Binding="{Binding Room}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Campus" Binding="{Binding Campus}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Comments" Binding="{Binding Comments}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Notes" Binding="{Binding Notes}" IsReadOnly="True"/>
+                    <DataGridCheckBoxColumn x:Name="NeedsRoomCheckBox" Header="Needs Room" Binding="{Binding NeedsRoom, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False"/>
+                    <DataGridTextColumn Header="Room Assignment" Binding="{Binding RoomAssignment}" IsReadOnly="False">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="{x:Type DataGridCell}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding NeedsRoom}" Value="False">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Setter Property="Background" Value="LightGray"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding NeedsRoom}" Value="True">
+                                        <Setter Property="IsEnabled" Value="True" />
+                                        <Setter Property="Background" Value="White"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+
+                    </DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Grid>
+        <Button x:Name="ContinueButton" Content="Continue" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click" DataContext="{Binding Source=StaticResource self}">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding HasAmbiguousCourses}" Value="False">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+    </StackPanel>
+</Window>
