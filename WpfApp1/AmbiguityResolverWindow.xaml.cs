@@ -34,12 +34,29 @@ namespace ClassroomAssignment
             
             CoursesDataGrid.ItemsSource = _courses;
 
+            this.Loaded += new RoutedEventHandler(Window_OnLoaded);
+            this.Closed += new EventHandler(Window_OnClosed);
+        }
+
+        private void Window_OnLoaded(object sender, RoutedEventArgs e)
+        {
             _courses.ForEach(RegisterNotificationListener);
+
+        }
+
+        private void Window_OnClosed(object sender, EventArgs e)
+        {
+            _courses.ForEach(UnsubscribeListener);
         }
 
         private void RegisterNotificationListener(Course course)
         {
             course.PropertyChanged += new PropertyChangedEventHandler(OnCoursesStateChanged);
+        }
+
+        private void UnsubscribeListener(Course course)
+        {
+            course.PropertyChanged -= RegisterNotificationListener;
         }
 
         public void OnCoursesStateChanged(object sender, PropertyChangedEventArgs e)
