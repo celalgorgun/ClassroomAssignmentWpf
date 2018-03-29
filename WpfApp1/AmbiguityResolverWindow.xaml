@@ -34,6 +34,7 @@
                         </Style.Triggers>
                     </Style>
                 </DataGrid.RowHeaderStyle>
+                
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Class ID" Binding="{Binding ClassID}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Course Name" Binding="{Binding CourseName}" IsReadOnly="True"/>
@@ -64,16 +65,6 @@
             </DataGrid>
 
         </Grid>
-        <Button x:Name="ContinueButton" Content="Continue" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click" DataContext="{Binding Source=StaticResource self}">
-            <Button.Style>
-                <Style TargetType="{x:Type Button}">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding HasAmbiguousCourses}" Value="False">
-                            <Setter Property="IsEnabled" Value="False"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-        </Button>
+        <Button x:Name="ContinueButton" Content="Continue" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click" IsEnabled="False"/>
     </StackPanel>
 </Window>

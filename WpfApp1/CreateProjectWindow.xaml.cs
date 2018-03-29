@@ -55,9 +55,20 @@ namespace ClassroomAssignment
             List<Course> courses = SheetParser.Parse(docLocations, new InMemoryRoomRepository());
             InMemoryCourseRepository.initInstance(courses);
 
-            AmbiguityResolverWindow mainWindow = new AmbiguityResolverWindow();
-            mainWindow.Show();
+
+            if (courses.FindAll(m =>m.AmbiguousState).Count > 0)
+            {
+                AmbiguityResolverWindow mainWindow = new AmbiguityResolverWindow();
+                mainWindow.Show();
+            }
+            else
+            {
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+            }
+
             this.Close();
+           
         }
     }
 }

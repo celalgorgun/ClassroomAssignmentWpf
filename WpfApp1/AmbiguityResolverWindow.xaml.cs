@@ -22,7 +22,7 @@ namespace ClassroomAssignment
     /// </summary>
     public partial class AmbiguityResolverWindow : Window, INotifyPropertyChanged
     {
-        private List<Course> _courses;
+        private List<Course> _ambiguousCourses;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -30,9 +30,11 @@ namespace ClassroomAssignment
         {
             InitializeComponent();
 
-            _courses = InMemoryCourseRepository.getInstance().Courses;
+            var allCourses = InMemoryCourseRepository.getInstance().Courses;
+
+            _ambiguousCourses = allCourses.FindAll(m => m.AmbiguousState);
             
-            CoursesDataGrid.ItemsSource = _courses;
+            CoursesDataGrid.ItemsSource = _ambiguousCourses;
 
             this.Loaded += new RoutedEventHandler(Window_OnLoaded);
             this.Closed += new EventHandler(Window_OnClosed);
@@ -40,13 +42,13 @@ namespace ClassroomAssignment
 
         private void Window_OnLoaded(object sender, RoutedEventArgs e)
         {
-            _courses.ForEach(RegisterNotificationListener);
+            _ambiguousCourses.ForEach(RegisterNotificationListener);
 
         }
 
         private void Window_OnClosed(object sender, EventArgs e)
         {
-            _courses.ForEach(UnsubscribeListener);
+            _ambiguousCourses.ForEach(UnsubscribeListener);
         }
 
         private void RegisterNotificationListener(Course course)
@@ -56,7 +58,7 @@ namespace ClassroomAssignment
 
         private void UnsubscribeListener(Course course)
         {
-            course.PropertyChanged -= RegisterNotificationListener;
+            course.PropertyChanged -= OnCoursesStateChanged;
         }
 
         public void OnCoursesStateChanged(object sender, PropertyChangedEventArgs e)
@@ -73,7 +75,7 @@ namespace ClassroomAssignment
 
         private bool AmbiguousCoursesExists()
         {
-            return _courses.FindAll(m => m.AmbiguousState).Count > 0;
+            return _ambiguousCourses.FindAll(m => m.AmbiguousState).Count > 0;
         }
 
 

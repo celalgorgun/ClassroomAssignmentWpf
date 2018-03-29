@@ -211,7 +211,7 @@ namespace ClassroomAssignment.Model
             Match commentColMatch = shortPKI.Match(Comments);
             Match notesColMatch = shortPKI.Match(Notes);
 
-            // one column has room assignment
+            
             if (roomColMatch.Success)
             {
                 IRoomRepository roomRepository = InMemoryRoomRepository.getInstance();
@@ -222,7 +222,7 @@ namespace ClassroomAssignment.Model
             {
                 RoomAssignment = Comments;
             }
-            else
+            else if (notesColMatch.Success)
             {
                 RoomAssignment = Notes;
             }

@@ -5,8 +5,56 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ClassroomAssignment"
         mc:Ignorable="d"
-        Title="Window1" Height="300" Width="300">
-    <Grid>
-        
-    </Grid>
+        Title="Window1" WindowStartupLocation="CenterScreen">
+
+    <StackPanel Orientation="Vertical">
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_File">
+                    <MenuItem Header="Export Room Schedules" Click="Menu_Export"/>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        <DataGrid x:Name="CoursesDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" Height="504" CanUserSortColumns="False">
+            <DataGrid.RowHeaderStyle>
+                <Style TargetType="{x:Type DataGridRowHeader}">
+                    <Setter Property="Width" Value="25" />
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding NeedsRoom}" Value="True"/>
+                                <Condition Binding="{Binding AlreadyAssignedRoom}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Background" Value="Red"/>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding NeedsRoom}" Value="True"/>
+                                <Condition Binding="{Binding AlreadyAssignedRoom}" Value="True"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Background" Value="Green"/>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding NeedsRoom}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Background" Value="DimGray"/>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowHeaderStyle>
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Class ID" Binding="{Binding ClassID}" IsReadOnly="True" Width="Auto"/>
+                <DataGridTextColumn Header="SIS ID" Binding="{Binding SIS_ID}" IsReadOnly="True" Width="Auto" />
+                <DataGridTextColumn Header="Course Title" Binding="{Binding Course_Title}" IsReadOnly="True" Width="Auto"/>
+                <DataGridTextColumn Header="Meeting Pattern" Binding="{Binding MeetingPattern}" IsReadOnly="True" Width="Auto" />
+                <DataGridTextColumn Header="Room" Binding="{Binding Room}" IsReadOnly="True" Width="Auto"/>
+                <DataGridTextColumn Header="Campus" Binding="{Binding Campus}" IsReadOnly="True" Width="Auto" />
+                <DataGridTextColumn Header="Room Assignment" Binding="{Binding RoomAssignment}" IsReadOnly="True" Width="Auto"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </StackPanel>
+
 </Window>
