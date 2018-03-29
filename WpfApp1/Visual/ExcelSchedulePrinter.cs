@@ -7,6 +7,8 @@ using NPOI.SS.Util;
 using static ClassroomAssignment.Model.ClassScheduleTemplate;
 using System.Collections.Specialized;
 using System.Collections;
+using NPOI.HSSF.UserModel;
+using System.IO;
 
 namespace ClassroomAssignment.Model.Visual
 {
@@ -25,21 +27,18 @@ namespace ClassroomAssignment.Model.Visual
         static Dictionary<TimeSpan, int> TimeMap = new Dictionary<TimeSpan, int>();
         static Dictionary<DayOfWeek, int> DayMap = new Dictionary<DayOfWeek, int>();
 
-        private IWorkbook _workbook;
-        public IWorkbook Workbook
-        {
-            get
-            {
-                return _workbook;
-            }
-            set
-            {
-                _workbook = value;
-                scheduleTemplate = _workbook.GetSheet(ClassScheduleTemplate.SCHEDULE_TEMPLATE_NAME);
-            }
-        }
+        private string _outputFile;
 
-        private ISheet scheduleTemplate;
+        private IWorkbook _workbook;
+
+        private ISheet _scheduleTemplate;
+
+        public ExcelSchedulePrinter(string outputFile, IWorkbook workbook)
+        {
+            _outputFile = outputFile;
+            _workbook = workbook;
+            _scheduleTemplate = _workbook.GetSheet(ClassScheduleTemplate.SCHEDULE_TEMPLATE_NAME);
+        }
 
         static ExcelSchedulePrinter()
         {
@@ -59,8 +58,8 @@ namespace ClassroomAssignment.Model.Visual
             DayMap.Add(DayOfWeek.Monday, 2);
             DayMap.Add(DayOfWeek.Tuesday, 3);
             DayMap.Add(DayOfWeek.Wednesday, 4);
-            DayMap.Add(DayOfWeek.Thursday, 6);
-            DayMap.Add(DayOfWeek.Friday, 7);
+            DayMap.Add(DayOfWeek.Thursday, 5);
+            DayMap.Add(DayOfWeek.Friday, 6);
 
         }
         
@@ -68,7 +67,8 @@ namespace ClassroomAssignment.Model.Visual
         public void Print(ICourseRepository courseRepo, IRoomRepository roomRepo)
         {
             List<Course> courses = courseRepo.Courses;
-            IEnumerable<Course> roomedCourses = courses.Where<Course>(x => x.AlreadyAssignedRoom && x.MeetingDays != null);
+            var test = courses.FindAll(x => x.RoomAssignment?.Equals("PKI 157") == true);
+            List<Course> roomedCourses = courses.FindAll(x => x.AlreadyAssignedRoom && x.MeetingDays != null);
             Dictionary<string, List<Course>> roomCourseMap = getRoomNameToCoursesMap(roomedCourses);
 
             List<string> roomWithCourses = roomCourseMap.Keys.ToList<string>();
@@ -76,17 +76,42 @@ namespace ClassroomAssignment.Model.Visual
             foreach (string room in roomWithCourses)
             {
                 
-                ISheet sheet = Workbook.CloneSheet(Workbook.GetSheetIndex(scheduleTemplate));
-                var sheetIndex = Workbook.GetSheetIndex(sheet);
-                Workbook.SetSheetName(sheetIndex, room);
-                Workbook.SetSheetHidden(sheetIndex, SheetState.Visible);
+                ISheet sheet = _workbook.CloneSheet(_workbook.GetSheetIndex(_scheduleTemplate));
+                var sheetIndex = _workbook.GetSheetIndex(sheet);
+                _workbook.SetSheetName(sheetIndex, room);
+                _workbook.SetSheetHidden(sheetIndex, SheetState.Visible);
 
                 ICell cell = sheet.GetRow(RoomNameLocation.Item1).GetCell(RoomNameLocation.Item2);
                 cell.SetCellValue(room);
                 
                 PrintCourses(sheet, roomCourseMap[room]);
                 printLegend(sheet);
-            }            
+            }
+
+            SortWorkbookSheets();
+
+            using(var fileStream = File.OpenWrite(_outputFile))
+            {
+                _workbook.Write(fileStream);
+            }
+        }
+
+        private void SortWorkbookSheets()
+        {
+
+            var listOfNames = new List<string>();
+
+            for (int i = 0; i < _workbook.NumberOfSheets; i++)
+            {
+                listOfNames.Add(_workbook.GetSheetName(i));
+            }
+
+            listOfNames.Sort();
+
+            for (int i = 0; i < _workbook.NumberOfSheets; i++)
+            {
+                _workbook.SetSheetOrder(listOfNames[i], i);
+            }
         }
 
         private void printLegend(ISheet sheet)
@@ -100,7 +125,7 @@ namespace ClassroomAssignment.Model.Visual
             {
                 IRow row = sheet.GetRow(rowIndex);
                 ICell cell = row.GetCell(cellIndex);
-                cell.CellStyle = ClassScheduleTemplate.GetCellStyle(Workbook, (short) entry.Value);
+                cell.CellStyle = ClassScheduleTemplate.GetCellStyle(_workbook, (short) entry.Value);
                 cell.SetCellValue((string) entry.Key);
                 rowIndex++;
             }
@@ -142,14 +167,14 @@ namespace ClassroomAssignment.Model.Visual
                     var cell = row.GetCell(column);
 
                     // Style cell
-                    cell.CellStyle = ClassScheduleTemplate.GetCellStyle(Workbook, course.Color());
+                    cell.CellStyle = ClassScheduleTemplate.GetCellStyle(_workbook, course.Color());
 
                     var cellValue = getCourseLabel(course);
                     cell.SetCellValue(cellValue);
+                    sheet.AutoSizeColumn(column, true);
 
                     CellRangeAddress cellRange = new CellRangeAddress(startRow, endRow, column, column);
                     var regionIndex = sheet.AddMergedRegion(cellRange);
-                    sheet.AutoSizeColumn(column, true);
                 }
             }
 
@@ -157,7 +182,13 @@ namespace ClassroomAssignment.Model.Visual
 
         private string getCourseLabel(Course course)
         {
-            return course.Course_Title + Environment.NewLine + course.Instructor + Environment.NewLine + course.MeetingPattern;
+            return course.Course_Title 
+                + Environment.NewLine
+                + string.Format("Sect. {0}", course.Section_Number)
+                + Environment.NewLine
+                + course.Instructor 
+                + Environment.NewLine 
+                + course.MeetingPattern;
         }
 
         private int GetRowForTime(TimeSpan time)

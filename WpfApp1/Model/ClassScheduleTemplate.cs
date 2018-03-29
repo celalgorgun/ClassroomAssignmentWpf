@@ -48,6 +48,20 @@ namespace ClassroomAssignment.Model
             {
                 case DataConstants.SubjectCode.BIOI:
                     return (short)subjectColorMap[DataConstants.SubjectCode.BIOI];
+                case DataConstants.SubjectCode.BMI:
+                    return (short)subjectColorMap[DataConstants.SubjectCode.BMI];
+                case DataConstants.SubjectCode.CIST:
+                    return (short)subjectColorMap[DataConstants.SubjectCode.CIST];
+                case DataConstants.SubjectCode.CSCI:
+                    return (short)subjectColorMap[DataConstants.SubjectCode.CSCI];
+                case DataConstants.SubjectCode.CSTE:
+                    return (short)subjectColorMap[DataConstants.SubjectCode.CSTE];
+                case DataConstants.SubjectCode.EMIT:
+                    return (short)subjectColorMap[DataConstants.SubjectCode.EMIT];
+                case DataConstants.SubjectCode.ISQA:
+                    return (short)subjectColorMap[DataConstants.SubjectCode.ISQA];
+                case DataConstants.SubjectCode.ITIN:
+                    return (short)subjectColorMap[DataConstants.SubjectCode.ITIN];
                 default:
                     return (short)IndexedColors.SeaGreen.Index;
             }

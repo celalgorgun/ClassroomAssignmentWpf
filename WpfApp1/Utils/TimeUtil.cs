@@ -13,7 +13,7 @@ namespace ClassroomAssignment.Utils
         // <param name="timeStr">string of format "hh:mm (am|pm)"</param>
         public static TimeSpan StringToTimeSpan(string timeStr)
         {
-            Regex timePattern = new Regex(@"(\d{1,2}):(\d{1,2})(am|pm)");
+            Regex timePattern = new Regex(@"(\d{1,2})(?::)?(\d{1,2})?(am|pm)");
             Match match = timePattern.Match(timeStr);
 
             if (!match.Success)
@@ -35,7 +35,7 @@ namespace ClassroomAssignment.Utils
             }
 
             string minStr = match.Groups[2].Value;
-            int min = int.Parse(minStr);
+            int min = string.IsNullOrEmpty(minStr) ? 0 : int.Parse(minStr);
 
             return new TimeSpan(hr, min, 0);
         }

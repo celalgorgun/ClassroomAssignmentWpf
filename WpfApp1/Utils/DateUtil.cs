@@ -17,7 +17,7 @@ namespace ClassroomAssignment.Model.Utils
             DayNameMatcher.Add("M", DayOfWeek.Monday);
             DayNameMatcher.Add("T", DayOfWeek.Tuesday);
             DayNameMatcher.Add("W", DayOfWeek.Wednesday);
-            DayNameMatcher.Add("TH", DayOfWeek.Thursday);
+            DayNameMatcher.Add("Th", DayOfWeek.Thursday);
             DayNameMatcher.Add("F", DayOfWeek.Friday);
             DayNameMatcher.Add("S", DayOfWeek.Saturday);
         }

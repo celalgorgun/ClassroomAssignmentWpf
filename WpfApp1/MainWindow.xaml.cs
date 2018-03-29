@@ -1,19 +1,16 @@
 ﻿using ClassroomAssignment.Model;
 using ClassroomAssignment.Model.Repo;
 using Microsoft.Win32;
+using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using ClassroomAssignment.Model.Visual;
 
 namespace ClassroomAssignment
 {
@@ -61,6 +58,19 @@ namespace ClassroomAssignment
             if (saveFileDialog.ShowDialog() == true)
             {
                 var fileName = saveFileDialog.FileName;
+                var templateFile = Path.Combine(Environment.CurrentDirectory, "ClassroomGridTemplate.xls");
+                using (var fileStream = File.OpenRead(templateFile))
+                {
+                    IWorkbook workbook = new HSSFWorkbook(fileStream);
+                    workbook.RemoveSheetAt(workbook.GetSheetIndex("Sheet1"));
+
+                    workbook.MissingCellPolicy = MissingCellPolicy.CREATE_NULL_AS_BLANK;
+                    ExcelSchedulePrinter printer = new ExcelSchedulePrinter(fileName, workbook);
+                    ICourseRepository courseRepository = InMemoryCourseRepository.getInstance();
+                    //IRoomRepository roomRepository = InMemoryRoomRepository.getInstance();
+
+                    new ScheduleVisualization(courseRepository, null, printer).PrintSchedule();
+                }
             }
             
         }

@@ -103,7 +103,7 @@ namespace ClassroomAssignment.Model
         {
             bool multipleAssignments = false;
 
-            Regex longPKI = new Regex(RoomOptions.PETER_KEIWIT_INSTITUTE_REGEX);
+            Regex longPKI = new Regex(RoomOptions.PETER_KIEWIT_INSTITUTE_REGEX);
             Regex shortPKI = new Regex(RoomOptions.PKI_REGEX);
 
             Match roomColMatch = longPKI.Match(Room);
@@ -204,7 +204,7 @@ namespace ClassroomAssignment.Model
         {
             if (AmbiguousState) return;
 
-            Regex longPKI = new Regex(RoomOptions.PETER_KEIWIT_INSTITUTE_REGEX);
+            Regex longPKI = new Regex(RoomOptions.PETER_KIEWIT_INSTITUTE_REGEX);
             Regex shortPKI = new Regex(RoomOptions.PKI_REGEX);
 
             Match roomColMatch = longPKI.Match(Room);
@@ -214,8 +214,9 @@ namespace ClassroomAssignment.Model
             
             if (roomColMatch.Success)
             {
-                IRoomRepository roomRepository = InMemoryRoomRepository.getInstance();
-                var room = roomRepository.getNormalizedRoomName(Room);
+                //IRoomRepository roomRepository = InMemoryRoomRepository.getInstance();
+                //var room = roomRepository.getNormalizedRoomName(Room);
+                var room = Room.Replace("Peter Kiewit Institute", "PKI");
                 RoomAssignment = room;
             }
             else if (commentColMatch.Success)
