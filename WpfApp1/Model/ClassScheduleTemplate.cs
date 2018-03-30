@@ -28,7 +28,7 @@ namespace ClassroomAssignment.Model
         public static ICellStyle GetCellStyle(IWorkbook workbook, short foregroundColor)
         {
             IFont font = workbook.CreateFont();
-            font.Boldweight = (short) FontBoldWeight.Normal;
+            font.Boldweight = 550;
             font.FontName = "Calibri";
             font.FontHeightInPoints = 11;
 

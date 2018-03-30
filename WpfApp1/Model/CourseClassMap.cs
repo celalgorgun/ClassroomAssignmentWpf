@@ -21,9 +21,9 @@ namespace ClassroomAssignment.Model
             Map(m => m.SubjectCode).Index(i++);
             Map(m => m.CatalogNumber).Index(i++);
             Map(m => m.CourseName).Index(i++);
-            Map(m => m.Section_Number).Index(i++);
-            Map(m => m.Course_Title).Index(i++);
-            Map(m => m.Section_Type).Index(i++);
+            Map(m => m.SectionNumber).Index(i++);
+            Map(m => m.CourseTitle).Index(i++);
+            Map(m => m.SectionType).Index(i++);
             Map(m => m.Topic).Index(i++);
             Map(m => m.MeetingPattern).Index(i++);
             Map(m => m.Instructor).Index(i++);

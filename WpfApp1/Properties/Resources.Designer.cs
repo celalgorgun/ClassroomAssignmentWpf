@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ClassroomAssignmentWpf.Properties {
+namespace ClassroomAssignment.Properties {
     using System;
     
     

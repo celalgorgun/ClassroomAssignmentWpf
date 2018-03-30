@@ -4,11 +4,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace UnitTestProject
 {
     [TestClass]
-    public class UnitTest1
+    public class CourseTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestCousesDerivedPropertiesCorrect()
         {
+
         }
     }
 }

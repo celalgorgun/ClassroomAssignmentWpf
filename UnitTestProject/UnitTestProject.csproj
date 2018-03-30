@@ -86,8 +86,9 @@
     <Compile Include="ParsingPatternsTests.cs" />
     <Compile Include="ScheduleVisualizationTests.cs" />
     <Compile Include="SheetParserTests.cs" />
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CourseTests.cs" />
+    <Compile Include="Util\TestUtil.cs" />
     <Compile Include="UnitTest2.cs" />
   </ItemGroup>
   <ItemGroup>

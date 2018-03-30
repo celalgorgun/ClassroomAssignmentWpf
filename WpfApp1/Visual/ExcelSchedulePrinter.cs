@@ -182,9 +182,9 @@ namespace ClassroomAssignment.Model.Visual
 
         private string getCourseLabel(Course course)
         {
-            return course.Course_Title 
+            return course.CourseTitle 
                 + Environment.NewLine
-                + string.Format("Sect. {0}", course.Section_Number)
+                + string.Format("Sect. {0}", course.SectionNumber)
                 + Environment.NewLine
                 + course.Instructor 
                 + Environment.NewLine 
