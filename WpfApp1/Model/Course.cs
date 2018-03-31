@@ -513,22 +513,6 @@ namespace ClassroomAssignment.Model
         private void OnPropertyChanged([CallerMemberName] string propertyName="")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
-            if (propertyName.Equals(nameof(MeetingPattern)))
-            {
-                SetMeetingProperties();
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MeetingDays)));
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StartTime)));
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(EndTime)));
-            }
-
-            // Check if calculated properties have changed
-            var oldNeedsRoom = NeedsRoom;
-            SetNeedsRoom();
-            if (oldNeedsRoom != NeedsRoom) PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NeedsRoom)));
-
-            
-            
         }
 
         public void SetDerivedProperties()

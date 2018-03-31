@@ -21,7 +21,7 @@ namespace ClassroomAssignment.Model.Repo
             get { return _courses; }
         }
 
-        public static InMemoryCourseRepository getInstance()
+        public static InMemoryCourseRepository GetInstance()
         {
             return _instance;
         }

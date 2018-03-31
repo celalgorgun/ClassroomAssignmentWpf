@@ -24,9 +24,11 @@ namespace ClassroomAssignment.ViewModel
 
         public MainWindowViewModel()
         {
-
-            Courses = new ObservableCollection<Course>();
+            List<Course> courses = InMemoryCourseRepository.GetInstance().Courses;
+            Courses = new ObservableCollection<Course>(courses);
             Courses.CollectionChanged += Courses_CollectionChanged;
+
+            
         }
 
 
