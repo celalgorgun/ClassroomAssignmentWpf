@@ -19,19 +19,28 @@ namespace UnitTestProject.Util
             testCourse.SubjectCode = "BIOI";
             testCourse.CatalogNumber = "1000";
             testCourse.CourseName = "BIOI 1000";
-            testCourse.CourseTitle = "BIOI 1000";
             testCourse.SectionNumber = "1";
+            testCourse.CourseTitle = "INTRODUCTION TO BIOINFORMATICS";
+            testCourse.SectionType = DataConstants.SectionTypeOptions.LECTURE;
+            testCourse.Topic = string.Empty;
             testCourse.MeetingPattern = "MW 1:30pm-2:45pm";
             testCourse.Instructor = "Bastola, Dhundy";
-            testCourse.Room = "General Assignment Room";
-            testCourse.Status = "Active";
+            testCourse.Room = DataConstants.RoomOptions.GENERAL_ASSIGNMENT_ROOM;
+            testCourse.Status = DataConstants.StatusOptions.ACTIVE;
             testCourse.Session = "Regular Academic Session";
-            testCourse.Campus = "UNO";
-            testCourse.InstructionMethod = "In Person";
+            testCourse.Campus = DataConstants.CampusOptions.UNO;
+            testCourse.InstructionMethod = DataConstants.InstructionMethods.IN_PERSON;
+            testCourse.IntegerPartner = string.Empty;
             testCourse.Comments = "PKI 153";
             testCourse.Notes = "PKI 157";
             testCourse.AlreadyAssignedRoom = true;
 
+            return testCourse;
+        }
+
+        public bool VerifyDerivedPropertiesCorrect(Course testCourse)
+        {
+            return true;
         }
     }
 }
