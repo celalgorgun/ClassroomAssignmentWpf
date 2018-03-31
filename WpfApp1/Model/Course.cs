@@ -142,7 +142,11 @@ namespace ClassroomAssignment.Model
         }
 
         private string _topic;
-        public string Topic     // "Title/Topic"
+
+        /// <summary>
+        /// Property maps to the "Title/Topic" column of the department spreadsheet.
+        /// </summary>
+        public string Topic  
         {
             get => _topic;
             set
@@ -481,8 +485,13 @@ namespace ClassroomAssignment.Model
         }
 
 
-
-        public bool AlreadyAssignedRoom { get; set; }
+        /// <summary>
+        /// Calculated property. Returns true if RoomAssignment has been assigned. Does not guarantee valid assignment.
+        /// </summary>
+        public bool AlreadyAssignedRoom
+        {
+            get => string.IsNullOrEmpty(RoomAssignment) ? false : true;
+        }
 
         private string _roomAssignment;
         public string RoomAssignment
@@ -491,17 +500,7 @@ namespace ClassroomAssignment.Model
 
             set
             {
-                if(string.IsNullOrEmpty(value))
-                {
-                    _roomAssignment = null;
-                    AlreadyAssignedRoom = false;
-                }
-                else
-                {
-                    _roomAssignment = value;
-                    AlreadyAssignedRoom = true;
-                }
-
+                _roomAssignment = value;
                 OnPropertyChanged();
             }
         }
@@ -514,7 +513,22 @@ namespace ClassroomAssignment.Model
         private void OnPropertyChanged([CallerMemberName] string propertyName="")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AmbiguousState)));
+
+            if (propertyName.Equals(nameof(MeetingPattern)))
+            {
+                SetMeetingProperties();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MeetingDays)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StartTime)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(EndTime)));
+            }
+
+            // Check if calculated properties have changed
+            var oldNeedsRoom = NeedsRoom;
+            SetNeedsRoom();
+            if (oldNeedsRoom != NeedsRoom) PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NeedsRoom)));
+
+            
+            
         }
 
         public void SetDerivedProperties()
