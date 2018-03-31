@@ -515,6 +515,9 @@ namespace ClassroomAssignment.Model
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        /// <summary>
+        /// Convienence method. Sets the MeetingDays, StartTime, EndTime, NeedsRoom, and RoomAssignment, using the other properties of Course.
+        /// </summary>
         public void SetDerivedProperties()
         {
             SetMeetingProperties();
@@ -522,7 +525,10 @@ namespace ClassroomAssignment.Model
             SetRoomAssignment();
         }
 
-        private void SetMeetingProperties()
+        /// <summary>
+        /// Sets the MeetingDays, StartTime, EndTime properties using the state of the Course object.
+        /// </summary>
+        public void SetMeetingProperties()
         {
             Regex regex = new Regex(DataConstants.MeetingPatternOptions.TIME_PATTERN);
             Match match = regex.Match(MeetingPattern);
@@ -543,7 +549,11 @@ namespace ClassroomAssignment.Model
                 EndTime = TimeUtil.StringToTimeSpan(endTimeStr);
             }
         }
-        private void SetNeedsRoom()
+
+        /// <summary>
+        /// Sets the NeedsRoom property using the state of the Course object.
+        /// </summary>
+        public void SetNeedsRoom()
         {
             if (InstructionMethod?.Equals(InstructionMethods.OFF_CAMPUS) ?? false)
             {
@@ -560,7 +570,7 @@ namespace ClassroomAssignment.Model
             
         }
 
-        private void SetRoomAssignment()
+        public void SetRoomAssignment()
         {
             if (AmbiguousState) return;
 

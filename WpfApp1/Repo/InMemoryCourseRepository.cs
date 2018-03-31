@@ -18,7 +18,7 @@ namespace ClassroomAssignment.Model.Repo
         public event PropertyChangedEventHandler PropertyChanged;
 
         public List<Course> Courses {
-            get { return _courses; }
+            get => new List<Course>(_courses);
         }
 
         public static InMemoryCourseRepository GetInstance()
