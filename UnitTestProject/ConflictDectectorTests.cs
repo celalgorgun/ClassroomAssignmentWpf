@@ -1,4 +1,4 @@
-﻿using ClassroomAssignment.Model.Repo;
+using ClassroomAssignment.Model.Repo;
 using ClassroomAssignment.Repo;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -16,7 +16,7 @@ namespace UnitTestProject
         [TestMethod]
         public void HasConflict_True()
         {
-            ICourseRepository coureRepository = new ConflictingCourseRepo();
+            ICourseRepository courseRepository = new ConflictingCourseRepo();
             ConflictDetector detector = new ConflictDetector(courseRepository);
             ConflictResult result = detector.FindConflicts();
 
