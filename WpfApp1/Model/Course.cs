@@ -544,7 +544,8 @@ namespace ClassroomAssignment.Model
                 var endTimeStr = match.Groups[3].Value;
                 EndTime = TimeUtil.StringToTimeSpan(endTimeStr);
             }
-        }
+        } 
+
         private void SetNeedsRoom()
         {
             if (InstructionMethod?.Equals(InstructionMethods.OFF_CAMPUS) ?? false)
