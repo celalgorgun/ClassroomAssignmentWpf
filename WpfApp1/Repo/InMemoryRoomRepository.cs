@@ -9,11 +9,22 @@ namespace ClassroomAssignment.Model.Repo
     public class InMemoryRoomRepository : IRoomRepository
     {
         private static InMemoryRoomRepository instance;
+        private List<Room> myRooms;
 
-        public static void initInstance()
+        public List<Room> Rooms
+        {
+            get { return myRooms; }
+            private set { myRooms = value; }
+        }
+        public InMemoryRoomRepository(List<Room> myRooms)
+        {
+
+            Rooms = myRooms;
+        }
+        public static void initInstance(List<Room> myRooms)
         {
             if (instance != null) throw new InvalidOperationException("Room Repo already initialized");
-            instance = new InMemoryRoomRepository();
+            instance = new InMemoryRoomRepository(myRooms);
         }
 
         public static InMemoryRoomRepository getInstance()

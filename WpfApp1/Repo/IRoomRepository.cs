@@ -9,5 +9,6 @@ namespace ClassroomAssignment.Model.Repo
     public interface IRoomRepository
     {
         string getNormalizedRoomName(string roomName);
+        List<Room> Rooms { get; }
     }
 }
