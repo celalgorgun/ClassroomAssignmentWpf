@@ -22,7 +22,7 @@ namespace ClassroomAssignment.Model.Repo
             return instance;
         }        
 
-        public string getNormalizedRoomName(string roomName)
+        public string GetNormalizedRoomName(string roomName)
         {
             // TODO: Placeholder implementation
             return roomName.Replace("Peter Kiewit Institute", "PKI");

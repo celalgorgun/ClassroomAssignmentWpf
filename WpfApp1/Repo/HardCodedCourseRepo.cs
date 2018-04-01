@@ -33,16 +33,17 @@ namespace ClassroomAssignment.Repo
             testCourse.Session = "Regular Academic Session";
             testCourse.Campus = "UNO";
             testCourse.InstructionMethod = "In Person";
-            testCourse.Comments = "PKI 153";
+            testCourse.Comments = "";
             testCourse.Notes = "PKI 157";
             testCourse.AlreadyAssignedRoom = true;
-            testCourse.StartTime = new TimeSpan(13, 30, 0);
-            testCourse.EndTime = new TimeSpan(14, 45, 0);
+            //testCourse.StartTime = new TimeSpan(13, 30, 0);
+            //testCourse.EndTime = new TimeSpan(14, 45, 0);
 
             // This is the "normalized" name for the room
-            testCourse.RoomAssignment = "PKI 157";
-            testCourse.MeetingDays = new List<DayOfWeek>() { DayOfWeek.Monday, DayOfWeek.Wednesday };
+            //testCourse.RoomAssignment = "PKI 157";
+            //testCourse.MeetingDays = new List<DayOfWeek>() { DayOfWeek.Monday, DayOfWeek.Wednesday };
 
+            testCourse.SetDerivedProperties();
             Courses.Add(testCourse);
 
         }

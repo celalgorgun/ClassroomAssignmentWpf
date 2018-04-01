@@ -8,6 +8,6 @@ namespace ClassroomAssignment.Model.Repo
 {
     public interface IRoomRepository
     {
-        string getNormalizedRoomName(string roomName);
+        string GetNormalizedRoomName(string roomName);
     }
 }
