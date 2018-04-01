@@ -93,6 +93,7 @@
     <Compile Include="TestModels\NonConflictingCourseRepo.cs" />
     <Compile Include="Util\TestUtil.cs" />
     <Compile Include="UnitTest2.cs" />
+    <Compile Include="RoomSearchTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
