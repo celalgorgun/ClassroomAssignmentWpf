@@ -33,6 +33,7 @@ namespace ClassroomAssignment.ViewModel
             
         }
 
+       
 
         private void Courses_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
