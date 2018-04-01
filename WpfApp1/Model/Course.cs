@@ -16,76 +16,416 @@ namespace ClassroomAssignment.Model
     public class Course : INotifyPropertyChanged
     {
         // Original Attributes of Supplied Spreadsheets
-        public string ClassID { get; set; }
-        public string SIS_ID { get; set; }
-        public String Term { get; set; } 
-        public string TermCode { get; set; }
-        public string DepartmentCode { get; set; }
-        public string SubjectCode { get; set; }
-        public string CatalogNumber { get; set; }
-        public string CourseName { get; set; }     // Course
-        public string Section_Number { get; set; }
-        public string Course_Title { get; set; }
-        public string Section_Type { get; set; }
-        public string Topic { get; set; }  // "Title/Topic"
+        private string _classID;
+        public string ClassID
+        {
+            get => _classID;
+            set
+            {
+                _classID = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _SIS_ID;
+        public string SIS_ID
+        {
+            get => _SIS_ID;
+            set
+            {
+                _SIS_ID = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _term; 
+        public string Term
+        {
+            get => _term;
+            set
+            {
+                _term = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _termCode;
+        public string TermCode
+        {
+            get => _termCode;
+            set
+            {
+                _termCode = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _departmentCode;
+        public string DepartmentCode
+        {
+            get => _departmentCode;
+            set
+            {
+                _departmentCode = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _subjectCode;
+        public string SubjectCode
+        {
+            get => _subjectCode;
+            set
+            {
+                _subjectCode = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _catalogNumber;
+        public string CatalogNumber
+        {
+            get => _catalogNumber;
+            set
+            {
+                _catalogNumber = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // Course
+        private string _courseName;
+        /// <summary>
+        /// Property maps to the "Course" column of the deparment spreadsheet.
+        /// </summary>
+        public string CourseName
+        {
+            get => _courseName;
+            set
+            {
+                _courseName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _sectionNumber;
+        public string SectionNumber
+        {
+            get => _sectionNumber;
+            set
+            {
+                _sectionNumber = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string _courseTitle;
+        public string CourseTitle
+        {
+            get => _courseTitle;
+            set
+            {
+                _courseTitle = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _sectionType;
+        public string SectionType
+        {
+            get => _sectionType;
+            set
+            {
+                _sectionType = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _topic;
+        public string Topic     // "Title/Topic"
+        {
+            get => _topic;
+            set
+            {
+                _topic = value;
+                OnPropertyChanged();
+            }
+        }
 
         private string _meetingPattern;
         public string MeetingPattern
         {
-            get { return _meetingPattern; }
-
+            get => _meetingPattern;
             set
             {
-                Regex regex = new Regex(DataConstants.MeetingPatternOptions.TIME_PATTERN);
-                Match match = regex.Match(value);
-
-                if (match.Success)
-                {
-                    var daysCapture = match.Groups[1].Captures;
-                    MeetingDays = new List<DayOfWeek>();
-                    foreach(Capture c in daysCapture)
-                    {
-                        DayOfWeek day = DateUtil.AbbreviationToDayOfWeek(c.Value);
-                        MeetingDays.Add(day);
-                    }
-
-                    var startTimeStr = match.Groups[2].Value;
-                    StartTime = TimeUtil.StringToTimeSpan(startTimeStr);
-                    var endTimeStr = match.Groups[3].Value;
-                    EndTime = TimeUtil.StringToTimeSpan(endTimeStr);
-                }
-
                 _meetingPattern = value;
+                OnPropertyChanged();
             }
-        
         }
 
-        public string Instructor { get; set; }
+        private string _instructor;
+        public string Instructor
+        {
+            get => _instructor;
+            set
+            {
+                _instructor = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public string Room { get; set; }
+        private string _room;
+        public string Room
+        {
+            get => _room;
+            set
+            {
+                _room = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public String Status { get; set; }
-        public String Session { get; set; }
-        public String Campus { get; set; }
-        public String InstructionMethod { get; set; }
-        public String IntegerPartner { get; set; }
-        public String Schedule { get; set; }
-        public String Consent { get; set; }
-        public string CreditHrsMin { get; set; }
-        public string CreditHrs { get; set; }
-        public String GradeMode { get; set; }
-        public String Attributes { get; set; }
-        public String RoomAttributes { get; set; }
-        public string Enrollment { get; set; }
-        public string MaximumEnrollment { get; set; }
-        public string PriorEnrollment { get; set; }
-        public string ProjectedEnrollment { get; set; }
-        public string WaitCap { get; set; }
-        public string RoomCapRequest { get; set; }
-        public String CrossListings { get; set; }
-        public String LinkTo { get; set; }
-        public String Comments { get; set; }
-        public String Notes { get; set; }
+        private string _status;
+        public string Status
+        {
+            get => _status;
+            set
+            {
+                _status = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _session;
+        public string Session
+        {
+            get => _session;
+            set
+            {
+                _session = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _campus;
+        public string Campus
+        {
+            get => _campus;
+            set
+            {
+                _campus = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _instructionMethod;
+        public string InstructionMethod
+        {
+            get => _instructionMethod;
+            set
+            {
+                _instructionMethod = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _integerPartner;
+        public string IntegerPartner
+        {
+            get => _integerPartner;
+            set
+            {
+                _integerPartner = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _schedule;
+        public String Schedule
+        {
+            get => _schedule;
+            set
+            {
+                _schedule = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _consent;
+        public string Consent
+        {
+            get => _consent;
+            set
+            {
+                _consent = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _creditHrsMin;
+        public string CreditHrsMin
+        {
+            get => _creditHrsMin;
+            set
+            {
+                _creditHrsMin = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _creditHrs;
+        public string CreditHrs
+        {
+            get => _creditHrs;
+            set
+            {
+                _creditHrs = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string _gradeMode;
+        public String GradeMode
+        {
+            get => _gradeMode;
+            set
+            {
+                _gradeMode = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _attributes;
+        public string Attributes
+        {
+            get => _attributes;
+            set
+            {
+                _attributes = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _roomAttributes;
+        public string RoomAttributes
+        {
+            get => _roomAttributes;
+            set
+            {
+                _roomAttributes = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _enrollment;
+        public string Enrollment
+        {
+            get => _enrollment;
+            set
+            {
+                _enrollment = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _maximumEnrollment;
+        public string MaximumEnrollment
+        {
+            get => _maximumEnrollment;
+            set
+            {
+                _maximumEnrollment = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _priorEnrollment;
+        public string PriorEnrollment
+        {
+            get => _priorEnrollment;
+            set
+            {
+                _priorEnrollment = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _projectedEnrollment;
+        public string ProjectedEnrollment
+        {
+            get => _projectedEnrollment;
+            set
+            {
+                _projectedEnrollment = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _waitCap;
+        public string WaitCap
+        {
+            get => _waitCap;
+            set
+            {
+                _waitCap = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _roomCapRequest;
+        public string RoomCapRequest
+        {
+            get => _roomCapRequest;
+            set
+            {
+                _roomCapRequest = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _crossListings;
+        public string CrossListings
+        {
+            get => _crossListings;
+            set
+            {
+                _crossListings = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _linkTo;
+        public string LinkTo
+        {
+            get => _linkTo;
+            set
+            {
+                _linkTo = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _comments;
+        public string Comments
+        {
+            get => _comments;
+            set
+            {
+                _comments = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _notes;
+        public string Notes
+        {
+            get => _notes;
+            set
+            {
+                _notes = value;
+                OnPropertyChanged();
+            }
+        }
 
         // Derived information
         public bool AmbiguousState {
@@ -179,9 +519,32 @@ namespace ClassroomAssignment.Model
 
         public void SetDerivedProperties()
         {
+            SetMeetingProperties();
             SetNeedsRoom();
             SetRoomAssignment();
         }
+
+        private void SetMeetingProperties()
+        {
+            Regex regex = new Regex(DataConstants.MeetingPatternOptions.TIME_PATTERN);
+            Match match = regex.Match(MeetingPattern);
+
+            if (match.Success)
+            {
+                var daysCapture = match.Groups[1].Captures;
+                MeetingDays = new List<DayOfWeek>();
+                foreach (Capture c in daysCapture)
+                {
+                    DayOfWeek day = DateUtil.AbbreviationToDayOfWeek(c.Value);
+                    MeetingDays.Add(day);
+                }
+
+                var startTimeStr = match.Groups[2].Value;
+                StartTime = TimeUtil.StringToTimeSpan(startTimeStr);
+                var endTimeStr = match.Groups[3].Value;
+                EndTime = TimeUtil.StringToTimeSpan(endTimeStr);
+            }
+        } 
 
         private void SetNeedsRoom()
         {

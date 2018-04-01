@@ -27,8 +27,8 @@ namespace UnitTestProject
             testCourse.DepartmentCode = "UNO-BIOI";
             testCourse.SubjectCode = "BIOI";
             testCourse.CatalogNumber = "1000";
-            testCourse.Course_Title = "BIOI 1000";
-            testCourse.Section_Number = "1";
+            testCourse.CourseTitle = "BIOI 1000";
+            testCourse.SectionNumber = "1";
             testCourse.MeetingPattern = "MW 1:30pm-2:45pm";
             testCourse.Instructor = "Bastola, Dhundy";
             testCourse.Room = "General Assignment Room";

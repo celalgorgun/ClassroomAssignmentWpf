@@ -80,14 +80,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConflictDectectorTests.cs" />
     <Compile Include="CVSHelperTests.cs" />
     <Compile Include="InMemoryRoomRepositoryTest.cs" />
+    <Compile Include="TestModels\ConflictingCourseRepo.cs" />
     <Compile Include="NpoiTests.cs" />
     <Compile Include="ParsingPatternsTests.cs" />
     <Compile Include="ScheduleVisualizationTests.cs" />
     <Compile Include="SheetParserTests.cs" />
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CourseTests.cs" />
+    <Compile Include="TestModels\NonConflictingCourseRepo.cs" />
+    <Compile Include="Util\TestUtil.cs" />
     <Compile Include="UnitTest2.cs" />
     <Compile Include="RoomSearchTest.cs" />
   </ItemGroup>
